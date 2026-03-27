@@ -12,7 +12,7 @@
 #include "InputActionValue.h"
 #include "EnhancedInputComponent.h"
 
-#include "Tank.generated.h"
+#include "PlayerTank.generated.h"
 
 class UCameraComponent;
 
@@ -20,7 +20,7 @@ class UCameraComponent;
  * 
  */
 UCLASS()
-class BATTLEBLASTER_API ATank : public ABasePawn
+class BATTLEBLASTER_API APlayerTank : public ABasePawn
 {
 GENERATED_BODY()
 
@@ -30,7 +30,7 @@ protected:
 
 public:	
 
-	ATank();
+	APlayerTank();
 
     // Called every frame
     virtual void Tick(float DeltaTime) override;

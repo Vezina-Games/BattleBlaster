@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Tank.h"
+#include "PlayerTank.h"
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
 
 // Called when the game starts or when spawned
-void ATank::BeginPlay()
+void APlayerTank::BeginPlay()
 {
 	Super::BeginPlay();
 	
@@ -22,7 +22,7 @@ void ATank::BeginPlay()
 	}
 }
 
-ATank::ATank()
+APlayerTank::APlayerTank()
 {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComponent->SetupAttachment(CapsuleComponent);
@@ -35,7 +35,7 @@ ATank::ATank()
 }
 
 // Called every frame
-void ATank::Tick(float DeltaTime)
+void APlayerTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
@@ -50,20 +50,20 @@ void ATank::Tick(float DeltaTime)
 }
 
 // Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::MoveInput);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerTank::MoveInput);
 		
-		EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &ATank::RotateInput);
+		EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &APlayerTank::RotateInput);
 	}
 	
 }
 
-void ATank::MoveInput(const FInputActionValue& Value)
+void APlayerTank::MoveInput(const FInputActionValue& Value)
 {
 	float InputValue = Value.Get<float>() ;
 	
@@ -77,7 +77,7 @@ void ATank::MoveInput(const FInputActionValue& Value)
 	
 }
 
-void ATank::RotateInput(const FInputActionValue& Value)
+void APlayerTank::RotateInput(const FInputActionValue& Value)
 {
 	float InputValue = Value.Get<float>() ;
 	
