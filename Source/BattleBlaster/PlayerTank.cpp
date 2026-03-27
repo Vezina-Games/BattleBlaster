@@ -44,6 +44,8 @@ void APlayerTank::Tick(float DeltaTime)
 		FHitResult HitResult;
 		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
 		
+		RotateTurret(HitResult.ImpactPoint);
+		
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 50.0f, 16, FColor::Red, false, 0.f);
 	}
 
@@ -59,6 +61,10 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerTank::MoveInput);
 		
 		EnhancedInputComponent->BindAction(RotateAction, ETriggerEvent::Triggered, this, &APlayerTank::RotateInput);
+		
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &APlayerTank::Fire);
+		
+		UE_LOG(LogTemp, Display, TEXT("Player input component setup"));
 	}
 	
 }
@@ -66,8 +72,6 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 void APlayerTank::MoveInput(const FInputActionValue& Value)
 {
 	float InputValue = Value.Get<float>() ;
-	
-	UE_LOG(LogTemp, Warning, TEXT("MoveInput called with value: %f"), InputValue);
 	
 	FVector DeltaForward = FVector(InputValue, 0, 0) * MaxSpeed * GetWorld()->GetDeltaSeconds();
 	
@@ -80,8 +84,6 @@ void APlayerTank::MoveInput(const FInputActionValue& Value)
 void APlayerTank::RotateInput(const FInputActionValue& Value)
 {
 	float InputValue = Value.Get<float>() ;
-	
-	UE_LOG(LogTemp, Warning, TEXT("RotateInput called with value: %f"), InputValue);
 	
 	FRotator DeltaRotate = FRotator(0, InputValue, 0) * TurnSpeed * GetWorld()->GetDeltaSeconds();
 	

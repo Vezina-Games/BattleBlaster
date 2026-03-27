@@ -46,6 +46,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputAction* RotateAction;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	UInputAction* FireAction;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	USpringArmComponent* SpringArmComponent;
