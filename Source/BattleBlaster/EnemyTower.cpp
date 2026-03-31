@@ -7,28 +7,38 @@ void AEnemyTower::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	FTimerHandle FireTimerHandle;
+	
+	GetWorldTimerManager().SetTimer(FireTimerHandle, this, &AEnemyTower::CheckFireCondition, FireRate, true);
 }
 
 void AEnemyTower::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (InFireRange())
+	{
+		RotateTurret(PlayerTank->GetActorLocation());
+	}
+}
+
+void AEnemyTower::CheckFireCondition()
+{
+	if (PlayerTank && InFireRange())
+	{
+		Fire();
+	}
+}
+
+bool AEnemyTower::InFireRange()
+{
+	bool Result = false;
+	
 	if (PlayerTank)
 	{
-		FVector TowersLocation = GetActorLocation();
-		FVector PlayerLocation = PlayerTank->GetActorLocation();
-		
-		float DistanceToTank = (TowersLocation - PlayerLocation).Size();
-		
-		if (DistanceToTank <= Range)
-		{
-			FVector LookAtTarget = PlayerLocation;
-		
-			RotateTurret(LookAtTarget);
-		}
-		
-		
-		
+		float DistanceToTank = (GetActorLocation() - PlayerTank->GetActorLocation()).Size();
+		Result = DistanceToTank <= Range;
 	}
 	
+	return Result;
 }

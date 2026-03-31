@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 
 #include "Components/CapsuleComponent.h"
+#include "BaseProjectile.h"
 
 #include "BasePawn.generated.h"
 
@@ -30,8 +31,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	USceneComponent* ProjectileSpawnPoint;
 	
-	void RotateTurret(FVector LookAtTarget);
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ABaseProjectile> ProjectileClass;
 	
+	void RotateTurret(FVector LookAtTarget);
 	void Fire();
 	
 	

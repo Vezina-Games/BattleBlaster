@@ -3,6 +3,8 @@
 
 #include "BasePawn.h"
 
+
+
 // Sets default values
 ABasePawn::ABasePawn()
 {
@@ -42,7 +44,7 @@ void ABasePawn::Fire()
 	FVector FireLocation = ProjectileSpawnPoint->GetComponentLocation();
 	FRotator FireRotation = ProjectileSpawnPoint->GetComponentRotation();
 	
-	DrawDebugSphere(GetWorld(), FireLocation, 25.0f, 16, FColor::Red, false, 3.0f);
+	GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, FireLocation, FireRotation);
 	
 	UE_LOG(LogTemp, Display, TEXT("Firing weapon at"));
 }

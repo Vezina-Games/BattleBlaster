@@ -26,13 +26,15 @@ public:
 	
 	APlayerTank* PlayerTank;
 	
-	public:
+	void CheckFireCondition();
+	bool InFireRange();
+	
 	UPROPERTY(EditAnywhere)
 	float Damage = 100.0f;
 	UPROPERTY(EditAnywhere)
 	float Range = 1000.0f;
 	UPROPERTY(EditAnywhere)
-	float FireRate = 0.5f;
+	float FireRate = 2.0f;
 	UPROPERTY(EditAnywhere)
 	float ReloadTime = 3.0f;
 	float NextFireTime;
