@@ -28,9 +28,8 @@ public:
 	
 	void CheckFireCondition();
 	bool InFireRange();
+	void HandleDestruction();
 	
-	UPROPERTY(EditAnywhere)
-	float Damage = 100.0f;
 	UPROPERTY(EditAnywhere)
 	float Range = 1000.0f;
 	UPROPERTY(EditAnywhere)

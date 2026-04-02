@@ -3,6 +3,7 @@
 
 #include "BasePawn.h"
 
+#include "HealthComponent.h"
 
 
 // Sets default values
@@ -44,7 +45,19 @@ void ABasePawn::Fire()
 	FVector FireLocation = ProjectileSpawnPoint->GetComponentLocation();
 	FRotator FireRotation = ProjectileSpawnPoint->GetComponentRotation();
 	
-	GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, FireLocation, FireRotation);
-	
-	UE_LOG(LogTemp, Display, TEXT("Firing weapon at"));
+	if (ABaseProjectile* SpawnedProjectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, FireLocation, FireRotation))
+	{
+		SpawnedProjectile->SetOwner(this);
+		
+		if (AActor* ProjectileOwner = SpawnedProjectile->GetOwner())
+		{
+			UE_LOG(LogTemp, Display, TEXT("Projectile spawned by %s"), *ProjectileOwner->GetActorNameOrLabel());
+		}
+		
+	}
+}
+
+void ABasePawn::HandleDestruction()
+{
+	UE_LOG(LogTemp, Display, TEXT("Handle Destruction for %s"), *GetActorNameOrLabel());
 }

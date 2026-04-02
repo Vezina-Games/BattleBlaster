@@ -36,8 +36,7 @@ public:
 	
 	void RotateTurret(FVector LookAtTarget);
 	void Fire();
-	
-	
+	void HandleDestruction();
 	
 	UPROPERTY(EditAnywhere)
 	float RotationSpeed = 10.0f;

@@ -57,9 +57,11 @@ public:
 	UCameraComponent* FollowCameraComponent;
 	
 	void MoveInput(const FInputActionValue& Value);
-	
 	void RotateInput(const FInputActionValue& Value);
 	
+	void SetPlayerEnabled(bool bEnabled);
+	
+	void HandleDestruction();
 	
 	
 	UPROPERTY(EditAnywhere)
@@ -67,5 +69,10 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	float TurnSpeed = 5.0;
+	
+	UPROPERTY(VisibleAnywhere)
+	bool IsAlive = true;
+	
+	APlayerController* PlayerController;
 	
 };

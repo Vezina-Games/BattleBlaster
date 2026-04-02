@@ -20,7 +20,21 @@ class BATTLEBLASTER_API ABattleBlasterGameMode : public AGameModeBase
 	virtual void BeginPlay() override;
 	
 public:
+	
+	UPROPERTY(EditAnywhere)
+	float GameOverTime = 5.0f;
+	
+	UPROPERTY(VisibleAnywhere)
+	bool IsGameOver;
+	UPROPERTY(VisibleAnywhere)
+	bool IsVictory;
+	
 	APlayerTank* PlayerTank;
 	int32 TowerCount;
+	
+	void ActorDied(AActor* Actor);
+	void OnGameOverTimerTimeout();
+	
+	
 	
 };

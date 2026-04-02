@@ -24,7 +24,7 @@ void AEnemyTower::Tick(float DeltaTime)
 
 void AEnemyTower::CheckFireCondition()
 {
-	if (PlayerTank && InFireRange())
+	if (PlayerTank && PlayerTank->IsAlive && InFireRange())
 	{
 		Fire();
 	}
@@ -41,4 +41,11 @@ bool AEnemyTower::InFireRange()
 	}
 	
 	return Result;
+}
+
+void AEnemyTower::HandleDestruction()
+{
+	Super::HandleDestruction();
+	
+	Destroy();
 }

@@ -10,7 +10,7 @@ void APlayerTank::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	if ((PlayerController = Cast<APlayerController>(Controller)))
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
 		{
@@ -39,7 +39,7 @@ void APlayerTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	if (PlayerController)
 	{
 		FHitResult HitResult;
 		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
@@ -89,5 +89,34 @@ void APlayerTank::RotateInput(const FInputActionValue& Value)
 	
 	AddActorLocalRotation(DeltaRotate, true);
 	
+}
+
+void APlayerTank::SetPlayerEnabled(bool bEnabled)
+{
+	if (PlayerController)
+	{
+		if (bEnabled)
+		{
+			EnableInput(PlayerController);
+		}
+		else
+		{
+			DisableInput(PlayerController);
+		}
+		
+		PlayerController->SetShowMouseCursor(bEnabled);
+	}
+	
+}
+
+void APlayerTank::HandleDestruction()
+{
+	Super::HandleDestruction();
+	
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+	SetPlayerEnabled(false);
+	
+	IsAlive = false;
 }
 
