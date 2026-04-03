@@ -8,6 +8,9 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+
 #include "BaseProjectile.generated.h"
 
 UCLASS()
@@ -32,15 +35,27 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	class UStaticMeshComponent* BaseMeshComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     class UProjectileMovementComponent* ProjectileMovementComponent;
+	
+	UPROPERTY(VisibleAnywhere)
+	UNiagaraComponent* TrailParticles;
+	
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* HitParticles;
+	
+	UPROPERTY(EditAnywhere)
+	USoundBase* LaunchSound;
+	
+	UPROPERTY(EditAnywhere)
+	USoundBase* HitSound;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UCameraShakeBase> HitCameraShakeClass;
 	
 	UPROPERTY(EditAnywhere)
 	float Damage = 25.0f;
 	
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-	
-	
-	
-
 };

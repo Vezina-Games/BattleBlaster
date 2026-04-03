@@ -37,7 +37,16 @@ bool AEnemyTower::InFireRange()
 	if (PlayerTank)
 	{
 		float DistanceToTank = (GetActorLocation() - PlayerTank->GetActorLocation()).Size();
-		Result = DistanceToTank <= Range;
+		
+		FHitResult HitResult;
+		GetWorld()->LineTraceSingleByChannel(
+			HitResult,
+			GetActorLocation(),
+			PlayerTank->GetActorLocation(),
+			ECC_Visibility
+		);
+		
+		Result = (HitResult.GetActor() == PlayerTank) && DistanceToTank <= Range;
 	}
 	
 	return Result;

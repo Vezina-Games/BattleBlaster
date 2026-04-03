@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 
 #include "PlayerTank.h"
+#include "ScreenMessage.h"
 
 #include "BattleBlasterGameMode.generated.h"
 
@@ -20,9 +21,21 @@ class BATTLEBLASTER_API ABattleBlasterGameMode : public AGameModeBase
 	virtual void BeginPlay() override;
 	
 public:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UScreenMessage> ScreenMessageClass;
+	
+	UScreenMessage* ScreenMessageWidget;
+	
 	
 	UPROPERTY(EditAnywhere)
 	float GameOverTime = 5.0f;
+	
+	UPROPERTY(EditAnywhere)
+	int32 CountdownDelay = 3.0f;
+	
+	int32 CountdownTimer;
+	
+	FTimerHandle CountdownTimerHandle;
 	
 	UPROPERTY(VisibleAnywhere)
 	bool IsGameOver;
@@ -34,6 +47,7 @@ public:
 	
 	void ActorDied(AActor* Actor);
 	void OnGameOverTimerTimeout();
+	void OnCountdownTimerTimeout();
 	
 	
 	

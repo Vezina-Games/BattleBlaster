@@ -20,6 +20,10 @@ void APlayerTank::BeginPlay()
 			}
 		}
 	}
+	
+	SetPlayerEnabled(false);
+	IsAlive = true;
+	UE_LOG(LogTemp, Display, TEXT("Player Tank Spawned"));
 }
 
 APlayerTank::APlayerTank()
@@ -45,8 +49,6 @@ void APlayerTank::Tick(float DeltaTime)
 		PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
 		
 		RotateTurret(HitResult.ImpactPoint);
-		
-		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 50.0f, 16, FColor::Red, false, 0.f);
 	}
 
 }

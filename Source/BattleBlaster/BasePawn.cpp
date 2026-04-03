@@ -4,6 +4,7 @@
 #include "BasePawn.h"
 
 #include "HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -60,4 +61,24 @@ void ABasePawn::Fire()
 void ABasePawn::HandleDestruction()
 {
 	UE_LOG(LogTemp, Display, TEXT("Handle Destruction for %s"), *GetActorNameOrLabel());
+	
+	if (DestructionParticles)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, DestructionParticles, GetActorLocation());
+	}
+	
+	if (DestructionSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), DestructionSound, GetActorLocation());
+	}
+	
+	if (APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0))
+	{
+		if (DestructionCameraShakeClass)
+		{
+			PlayerController->ClientStartCameraShake(DestructionCameraShakeClass);
+		}
+	}
+	
+	
 }
